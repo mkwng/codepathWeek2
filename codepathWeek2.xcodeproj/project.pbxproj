@@ -19,6 +19,10 @@
 		15D2795C1955FEAA0054C759 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15D279441955FEAA0054C759 /* UIKit.framework */; };
 		15D279641955FEAA0054C759 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 15D279621955FEAA0054C759 /* InfoPlist.strings */; };
 		15D279661955FEAA0054C759 /* codepathWeek2Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D279651955FEAA0054C759 /* codepathWeek2Tests.m */; };
+		15D279721955FEC40054C759 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D279701955FEC40054C759 /* LoginViewController.m */; };
+		15D279731955FEC40054C759 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15D279711955FEC40054C759 /* LoginViewController.xib */; };
+		15D279771955FED30054C759 /* FeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D279751955FED30054C759 /* FeedViewController.m */; };
+		15D279781955FED30054C759 /* FeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15D279761955FED30054C759 /* FeedViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +52,12 @@
 		15D279611955FEAA0054C759 /* codepathWeek2Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "codepathWeek2Tests-Info.plist"; sourceTree = "<group>"; };
 		15D279631955FEAA0054C759 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		15D279651955FEAA0054C759 /* codepathWeek2Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = codepathWeek2Tests.m; sourceTree = "<group>"; };
+		15D2796F1955FEC40054C759 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		15D279701955FEC40054C759 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		15D279711955FEC40054C759 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		15D279741955FED30054C759 /* FeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedViewController.h; sourceTree = "<group>"; };
+		15D279751955FED30054C759 /* FeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedViewController.m; sourceTree = "<group>"; };
+		15D279761955FED30054C759 /* FeedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +121,12 @@
 				15D279501955FEAA0054C759 /* AppDelegate.m */,
 				15D279521955FEAA0054C759 /* Images.xcassets */,
 				15D279471955FEAA0054C759 /* Supporting Files */,
+				15D2796F1955FEC40054C759 /* LoginViewController.h */,
+				15D279701955FEC40054C759 /* LoginViewController.m */,
+				15D279711955FEC40054C759 /* LoginViewController.xib */,
+				15D279741955FED30054C759 /* FeedViewController.h */,
+				15D279751955FED30054C759 /* FeedViewController.m */,
+				15D279761955FED30054C759 /* FeedViewController.xib */,
 			);
 			path = codepathWeek2;
 			sourceTree = "<group>";
@@ -221,6 +237,8 @@
 			files = (
 				15D2794B1955FEAA0054C759 /* InfoPlist.strings in Resources */,
 				15D279531955FEAA0054C759 /* Images.xcassets in Resources */,
+				15D279781955FED30054C759 /* FeedViewController.xib in Resources */,
+				15D279731955FEC40054C759 /* LoginViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,6 +259,8 @@
 			files = (
 				15D279511955FEAA0054C759 /* AppDelegate.m in Sources */,
 				15D2794D1955FEAA0054C759 /* main.m in Sources */,
+				15D279771955FED30054C759 /* FeedViewController.m in Sources */,
+				15D279721955FEC40054C759 /* LoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

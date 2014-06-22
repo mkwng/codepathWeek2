@@ -7,7 +7,11 @@
 //
 
 #import "LoginViewController.h"
-#import "FeedViewController.h"
+#import "newsfeedViewController.h"
+#import "PeopleViewController.h"
+#import "MessagesViewController.h"
+#import "NotificationsViewController.h"
+#import "MoreViewController.h"
 
 
 @interface LoginViewController ()
@@ -23,6 +27,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *signupLabel;
 
 - (IBAction)onLogin:(id)sender;
+- (IBAction)tapGesture:(id)sender;
+
+
 
 @end
 
@@ -42,13 +49,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    
-    
-    self.loginButton.alpha=.75;
 
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+    self.loginButton.alpha=.75;
+//    self.loginButton.enabled = NO;
+
+
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
 
     
 }
@@ -76,7 +85,7 @@
          self.emptyLabel.alpha=0;
      }
      completion:^(BOOL finished) {
-        if ([self.loginTextField.text isEqualToString:@"hello"] && [self.passwordTextField.text isEqualToString:@"password"])
+        if ([self.passwordTextField.text isEqualToString:@"password"])
             [self loginSuccess];
         else
             [self loginFail];
@@ -85,13 +94,53 @@
 
 }
 
+- (IBAction)tapGesture:(id)sender {
+    [self.view endEditing:YES];
+}
+
 
 
 - (void) loginSuccess {
-    UIViewController *feedVc = [[FeedViewController alloc] init];
-    feedVc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     
-    [self presentViewController:feedVc animated:YES completion:nil];
+    UIViewController *feedVc = [[newsfeedViewController alloc] init];
+    UIViewController *peopleVc = [[PeopleViewController alloc] init];
+    UIViewController *messagesVc = [[MessagesViewController alloc] init];
+    UIViewController *notificationsVc = [[NotificationsViewController alloc] init];
+    UIViewController *moreVc = [[MoreViewController alloc] init];
+    
+    UINavigationController *feedNc = [[UINavigationController alloc] initWithRootViewController:feedVc];
+    feedNc.navigationBar.barTintColor = [UIColor colorWithRed:.23 green:.35 blue:.60 alpha:1];
+    feedNc.navigationBar.tintColor = [UIColor whiteColor];
+    NSShadow *shadow = [[NSShadow alloc] init];
+    NSDictionary *titleTextAttributes =
+    @{
+      NSFontAttributeName : [UIFont boldSystemFontOfSize:16],
+      NSForegroundColorAttributeName : [UIColor whiteColor],
+      NSShadowAttributeName : shadow
+      };
+    feedNc.navigationBar.titleTextAttributes = titleTextAttributes;
+
+    
+    
+    feedNc.tabBarItem.title = @"News Feed";
+    peopleVc.tabBarItem.title = @"People";
+    messagesVc.tabBarItem.title = @"Messages";
+    messagesVc.tabBarItem.image = [UIImage imageNamed:@"nav_messengerglyph"];
+    notificationsVc.tabBarItem.title = @"Notifications";
+    moreVc.tabBarItem.title = @"More";
+
+    
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    tabBarController.viewControllers = @[feedNc,peopleVc,messagesVc,notificationsVc,moreVc];
+    
+    [self presentViewController:tabBarController animated:YES completion:nil];
+
+    
+    
+    
+//    feedVc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+//    
+//    [self presentViewController:feedVc animated:NO completion:nil];
 }
 
 - (void) loginFail {
@@ -102,12 +151,16 @@
     self.passwordTextField.enabled = YES;
     self.signupLabel.alpha=1;
     self.emptyLabel.alpha=1;
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Incorrect password" message:@"Please make sure you typed your password correctly." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alertView show];
+    
 }
 
 -(void)shakeLogin {
     
     CABasicAnimation *shake = [CABasicAnimation animationWithKeyPath:@"position"];
-    [shake setDuration:0.06];
+    [shake setDuration:0.08];
     [shake setRepeatCount:3];
     [shake setAutoreverses:YES];
     [shake setFromValue:[NSValue valueWithCGPoint:
@@ -121,29 +174,63 @@
 
 - (void)keyboardDidShow:(NSNotification *)notification
 {
-    [UIView animateWithDuration:.6 animations:^{
-        CGRect containerFrame = self.containerView.frame;
-        containerFrame.origin.y -= 40;
-        self.containerView.frame = containerFrame;
-        
-        CGRect labelFrame = self.signupLabel.frame;
-        labelFrame.origin.y -= 116;
-        self.signupLabel.frame = labelFrame;
-    }];
+    NSDictionary *userInfo = [notification userInfo];
+    
+    // Get the keyboard height and width from the notification
+    // Size varies depending on OS, language, orientation
+    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    NSLog(@"Height: %f Width: %f", kbSize.height, kbSize.width);
+    
+    // Get the animation duration and curve from the notification
+    NSNumber *durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration = durationValue.doubleValue;
+    NSNumber *curveValue = userInfo[UIKeyboardAnimationCurveUserInfoKey];
+    UIViewAnimationCurve animationCurve = curveValue.intValue;
+    
+    [UIView animateWithDuration:animationDuration
+     delay:0.0
+     options:(animationCurve << 16)
+     animations:^{
+            CGRect containerFrame = self.containerView.frame;
+            containerFrame.origin.y -= 40;
+            self.containerView.frame = containerFrame;
+            
+            CGRect labelFrame = self.signupLabel.frame;
+            labelFrame.origin.y -= 116;
+            self.signupLabel.frame = labelFrame;
+      }
+     completion:nil
+     ];
 
 }
 
 -(void)keyboardDidHide:(NSNotification *)notification
 {
-    [UIView animateWithDuration:.6 animations:^{
-        CGRect containerFrame = self.containerView.frame;
+    NSDictionary *userInfo = [notification userInfo];
+    
+    // Get the keyboard height and width from the notification
+    // Size varies depending on OS, language, orientation
+    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    NSLog(@"Height: %f Width: %f", kbSize.height, kbSize.width);
+    
+    // Get the animation duration and curve from the notification
+    NSNumber *durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration = durationValue.doubleValue;
+    NSNumber *curveValue = userInfo[UIKeyboardAnimationCurveUserInfoKey];
+    UIViewAnimationCurve animationCurve = curveValue.intValue;
+    
+    [UIView animateWithDuration:animationDuration
+                          delay:0.0
+                        options:(animationCurve << 16)
+                     animations:^{
+                         CGRect containerFrame = self.containerView.frame;
         containerFrame.origin.y += 40;
         self.containerView.frame = containerFrame;
         
         CGRect labelFrame = self.signupLabel.frame;
         labelFrame.origin.y += 116;
         self.signupLabel.frame = labelFrame;
-    }];
+                     } completion:nil ];
 
 }
 

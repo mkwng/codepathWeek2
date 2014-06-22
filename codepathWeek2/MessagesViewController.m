@@ -1,18 +1,18 @@
 //
-//  FeedViewController.m
+//  MessagesViewController.m
 //  codepathWeek2
 //
-//  Created by Michael Wang on 6/21/14.
+//  Created by Michael Wang on 6/22/14.
 //  Copyright (c) 2014 mkwng. All rights reserved.
 //
 
-#import "FeedViewController.h"
+#import "MessagesViewController.h"
 
-@interface FeedViewController ()
+@interface MessagesViewController ()
 
 @end
 
-@implementation FeedViewController
+@implementation MessagesViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

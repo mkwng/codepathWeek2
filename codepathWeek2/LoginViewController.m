@@ -28,6 +28,7 @@
 
 - (IBAction)onLogin:(id)sender;
 - (IBAction)tapGesture:(id)sender;
+- (IBAction)editingChanged;
 
 
 
@@ -51,9 +52,8 @@
     
 
     
-    self.loginButton.alpha=.75;
-//    self.loginButton.enabled = NO;
-
+    self.loginButton.alpha=.5;
+    [self.loginButton setEnabled:NO];
 
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -76,6 +76,8 @@
     self.loginTextField.enabled = NO;
     self.passwordTextField.enabled = NO;
     self.signupLabel.alpha=.75;
+    [self.loginButton setBackgroundImage:[UIImage imageNamed:@"logging_in_button"] forState:UIControlStateDisabled];
+    [self.loginButton setBackgroundImage:[UIImage imageNamed:@"logging_in_button"] forState:UIControlStateNormal];
 
     [UIView
      animateWithDuration:1
@@ -123,11 +125,15 @@
     
     
     feedNc.tabBarItem.title = @"News Feed";
+    feedNc.tabBarItem.image = [UIImage imageNamed:@"tab_newsfeed"];
     peopleVc.tabBarItem.title = @"People";
+    peopleVc.tabBarItem.image = [UIImage imageNamed:@"tab_people"];
     messagesVc.tabBarItem.title = @"Messages";
     messagesVc.tabBarItem.image = [UIImage imageNamed:@"nav_messengerglyph"];
     notificationsVc.tabBarItem.title = @"Notifications";
+    notificationsVc.tabBarItem.image = [UIImage imageNamed:@"tab_notifications"];
     moreVc.tabBarItem.title = @"More";
+    moreVc.tabBarItem.image = [UIImage imageNamed:@"tab_more"];
 
     
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
@@ -151,6 +157,8 @@
     self.passwordTextField.enabled = YES;
     self.signupLabel.alpha=1;
     self.emptyLabel.alpha=1;
+    [self.loginButton setBackgroundImage:[UIImage imageNamed:@"login_button_disabled"] forState:UIControlStateDisabled];
+    [self.loginButton setBackgroundImage:[UIImage imageNamed:@"login_button_disabled"] forState:UIControlStateNormal];
     
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Incorrect password" message:@"Please make sure you typed your password correctly." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [alertView show];
@@ -178,8 +186,8 @@
     
     // Get the keyboard height and width from the notification
     // Size varies depending on OS, language, orientation
-    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    NSLog(@"Height: %f Width: %f", kbSize.height, kbSize.width);
+//    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+//    NSLog(@"Height: %f Width: %f", kbSize.height, kbSize.width);
     
     // Get the animation duration and curve from the notification
     NSNumber *durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey];
@@ -210,8 +218,8 @@
     
     // Get the keyboard height and width from the notification
     // Size varies depending on OS, language, orientation
-    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    NSLog(@"Height: %f Width: %f", kbSize.height, kbSize.width);
+//    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+//    NSLog(@"Height: %f Width: %f", kbSize.height, kbSize.width);
     
     // Get the animation duration and curve from the notification
     NSNumber *durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey];
@@ -232,6 +240,17 @@
         self.signupLabel.frame = labelFrame;
                      } completion:nil ];
 
+}
+
+- (IBAction)editingChanged {
+    if ([self.loginTextField.text length] != 0 && [self.passwordTextField.text length] != 0 ) {
+        [self.loginButton setEnabled:YES];
+        self.loginButton.alpha = 1;
+    }
+    else {
+        [self.loginButton setEnabled:NO];
+        self.loginButton.alpha = .5;
+    }
 }
 
 @end

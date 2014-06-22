@@ -37,9 +37,9 @@
     self.navigationItem.title = @"News Feed";
     
     // Configure the left button
-    //    UIImage *leftButtonImage = [[UIImage imageNamed:@"leftButton"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    //    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:leftButtonImage style:UIBarButtonItemStylePlain target:self action:@selector(onLeftButton:)];
-    //    self.navigationItem.leftBarButtonItem = leftButton;
+        UIImage *leftButtonImage = [[UIImage imageNamed:@"search"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithImage:leftButtonImage style:UIBarButtonItemStylePlain target:self action:nil];
+        self.navigationItem.leftBarButtonItem = leftButton;
     
     // Configure the right button
         UIImage *rightButtonImage = [[UIImage imageNamed:@"navBar_DivebarIcon_Highlighted_pre_ios_7"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
